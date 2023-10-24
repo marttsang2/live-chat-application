@@ -3,13 +3,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCTrHVq8OZu-7zcFBRVYjaqa4bOuTccH5A",
-  authDomain: "live-chat-application-29e38.firebaseapp.com",
-  projectId: "live-chat-application-29e38",
-  storageBucket: "live-chat-application-29e38.appspot.com",
-  messagingSenderId: "1749541156",
-  appId: "1:1749541156:web:7e2b4b729b2b29d40693b1",
-  measurementId: "G-PYBZ5RMX2J"
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
