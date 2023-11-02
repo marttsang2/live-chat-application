@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -16,4 +17,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-export { db, auth };
+const googleSignIn = async () => {
+  const provider = new GoogleAuthProvider();
+  await signInWithRedirect(auth, provider);
+};
+
+export { db, auth, googleSignIn };

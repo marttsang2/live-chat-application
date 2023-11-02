@@ -1,14 +1,8 @@
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
-import { auth } from "../../../firebase";
+import { auth, googleSignIn } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
-
-  const googleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    await signInWithRedirect(auth, provider);
-  };
 
   const signOut = () => {
     auth.signOut();
@@ -24,7 +18,7 @@ const Navbar = () => {
           </button>
         ) : (
           <button className="sign-in"
-              onClick={() => googleSignIn()}
+              onClick={googleSignIn}
               type="button"
             >
               Login

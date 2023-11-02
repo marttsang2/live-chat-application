@@ -125,7 +125,7 @@ function RoomPage() {
       </div>
       <div className="flex items-center gap-4">
         <input
-          className="w-full border-2 border-blue-500 py-1 px-2 rounded-md"
+          className={`w-full border-2 py-1 px-2 rounded-md ${user ? "border-blue-500" : "border-gray-200"}`}
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
@@ -134,12 +134,14 @@ function RoomPage() {
               handleSendMessage();
             }
           }}
-          placeholder="Type your message..."
+          placeholder={user ? "Type your message..." : "Login to send message"}
+          disabled={!user}
           autoFocus
         />
         <button
           onClick={handleSendMessage}
-          className="bg-slate-500 text-white py-1 px-4 rounded-md"
+          className={`text-white py-1 px-4 rounded-md ${user ? "bg-blue-500" : "bg-gray-200"}`}
+          disabled={!user}
         >
           Send
         </button>

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
+import { auth, db, googleSignIn } from "../../firebase";
 import { Link } from "react-router-dom";
 import Modal from "../components/modal/Modal";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 interface Room {
   id: string;
@@ -12,6 +13,7 @@ interface Room {
 }
 
 function HomePage() {
+  const [user] = useAuthState(auth);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [newRoomName, setNewRoomName] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
@@ -42,7 +44,7 @@ function HomePage() {
   return (
     <div className="max-w-5xl mx-auto flex flex-col gap-4 mt-6">
       <Modal isOpen={showModal} setIsOpen={setShowModal}>
-        <form onSubmit={createNewRoom}>
+        {user && <form onSubmit={createNewRoom}>
           <input 
             className="border-2 border-gray-300 p-2 rounded-md min-w-[320px] my-4"
             type="text"
@@ -57,11 +59,22 @@ function HomePage() {
             className="bg-blue-500 text-white py-1 px-4 rounded-md"
           >Create Room</button>
           </div>
-        </form>
+        </form>}
+        {
+          !user && <div className="flex justify-center items-center flex-col gap-4">
+            <p className="text-md font-semibold mb-4">Please sign in to create a room</p>
+            <button
+              className="bg-blue-500 text-white py-1 px-4 rounded-md"
+              onClick={googleSignIn}
+            >
+              Sign In
+            </button>
+          </div>
+        }
       </Modal>
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">{`Available Rooms (${rooms.length})`}</h2>
-        <button className="border-2 border-blue-500 py-2 px-4 rounded-md" onClick={() => setShowModal(true)}>
+        <button className="bg-blue-500 text-white py-2 px-4 rounded-md" onClick={() => setShowModal(true)}>
           Create Room
         </button>
       </div>
